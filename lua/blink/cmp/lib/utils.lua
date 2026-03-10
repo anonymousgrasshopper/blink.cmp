@@ -190,25 +190,6 @@ function utils.restore_auto_wrap()
   end)
 
   if not success then error(err) end
-
-  -- Schedule a check to reformat the line if needed.
-  -- Since 't' or 'c' was disabled during completion, text may have exceeded
-  -- textwidth without triggering auto-wrap. We check after the current
-  -- event loop iteration to ensure any pending input has been processed.
-  if restore_a then
-    vim.schedule(function()
-      local textwidth = vim.bo.textwidth
-      if textwidth > 0 and vim.api.nvim_get_mode().mode == 'i' then
-        local current_line = vim.api.nvim_get_current_line()
-        if #current_line > textwidth then
-          -- Trigger reformat of current paragraph using internal formatting
-          vim.cmd('normal! gqap')
-          -- Return to insert mode
-          vim.cmd('startinsert')
-        end
-      end
-    end)
-  end
 end
 
 --- Disable redraw in neovide for the duration of the callback
