@@ -159,6 +159,10 @@ function utils.disable_auto_wrap()
     vim.b.blink_cmp_restore_formatoptions_c = true
     vim.opt.formatoptions:remove('c')
   end
+  if formatoptions.a then
+    vim.b.blink_cmp_restore_formatoptions_a = true
+    vim.opt.formatoptions:remove('a')
+  end
 end
 
 --- Restores auto text wrapping (formatoptions 't' and 'c') previously disabled
@@ -168,6 +172,7 @@ end
 function utils.restore_auto_wrap()
   local restore_t = vim.b.blink_cmp_restore_formatoptions_t
   local restore_c = vim.b.blink_cmp_restore_formatoptions_c
+  local restore_a = vim.b.blink_cmp_restore_formatoptions_a
 
   local success, err = pcall(function()
     if restore_t then
@@ -177,6 +182,10 @@ function utils.restore_auto_wrap()
     if restore_c then
       vim.opt.formatoptions:append('c')
       vim.b.blink_cmp_restore_formatoptions_c = nil
+    end
+    if restore_a then
+      vim.opt.formatoptions:append('a')
+      vim.b.blink_cmp_restore_formatoptions_a = nil
     end
   end)
 
